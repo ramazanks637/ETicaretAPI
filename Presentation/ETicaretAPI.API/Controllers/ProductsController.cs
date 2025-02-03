@@ -19,7 +19,7 @@ namespace ETicaretAPI.API.Controllers
         }
 
         [HttpGet] // attribute kullanılmaması durumunda swagger hata verecektir.
-        public async void Get()
+        public async Task Get()
         {
             await _productWriteRepository.AddRangeAsync(new()
             {
@@ -29,6 +29,14 @@ namespace ETicaretAPI.API.Controllers
             });
             var count =  await _productWriteRepository.SaveAsync();
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var product = await _productReadRepository.GetByIdAsync(id);
+            return Ok(product);
+        }
+
 
     }
 }
